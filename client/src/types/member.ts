@@ -6,7 +6,7 @@ export interface Member {
   created: string;
   lastActive: string;
   gender: string;
-  descripction?: string;
+  description?: string;
   city: string;
   country: string;
 }
