@@ -1,11 +1,11 @@
 meta {
-  name: Member - Valid
+  name: Members - Valid
   type: http
-  seq: 5
+  seq: 2
 }
 
 get {
-  url: {{baseUrl}}/api/members/arenita-id
+  url: {{baseUrl}}/api/members
   body: none
   auth: bearer
 }
@@ -19,13 +19,13 @@ tests {
     expect(res.getStatus()).to.equal(200);
   });
   
-  test("Should return member", function() {
+  test("Should return members", function() {
     const jsonData = res.getBody();
-    const firstMember = jsonData;
-    
+    const firstMember = jsonData[0];
+  
     expect(firstMember).to.have.property("id");
     expect(firstMember).to.have.property("displayName");
-    
+  
     expect(firstMember.id).to.equal("arenita-id");
     expect(firstMember.displayName).to.equal("Arenita");
   });

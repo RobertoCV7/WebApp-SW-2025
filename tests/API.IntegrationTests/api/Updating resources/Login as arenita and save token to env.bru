@@ -1,7 +1,7 @@
 meta {
-  name: Login - Valid
+  name: Login as arenita and save token to env
   type: http
-  seq: 3
+  seq: 1
 }
 
 post {
@@ -23,7 +23,7 @@ tests {
   });
   
   const data = res.body;
-  bru.setEnvVar("authToken", data.token);
+  bru.setEnvVar('arenitaToken', data.token);
 }
 
 settings {
