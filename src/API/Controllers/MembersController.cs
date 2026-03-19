@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using API.Interfaces;
 using API.Mappers;
 using API.DTOs;
-using System.Security.Claims;
 using API.Extensions;
 using API.Helpers;
 
@@ -17,6 +16,8 @@ public class MembersController(IMembersRepository membersRepository,
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<Member>>> GetMembers([FromQuery] MemberRequest request)
     {   
+        request.CurrentMemberId = User.GetMemberId();
+
         return Ok(await membersRepository.GetMembersAsync(request));
     }
 

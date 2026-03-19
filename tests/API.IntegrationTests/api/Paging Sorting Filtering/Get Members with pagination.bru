@@ -5,20 +5,21 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/api/members?pageNumber=1&pageSize=5
+  url: {{baseUrl}}/api/members?pageNumber=1&pageSize=10
   body: none
   auth: inherit
 }
 
 params:query {
   pageNumber: 1
-  pageSize: 5
+  pageSize: 10
 }
 
 headers {
-  Authorization: Bearer {{token}}
+  Authorization: Bearer {{arenitaToken}}
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
