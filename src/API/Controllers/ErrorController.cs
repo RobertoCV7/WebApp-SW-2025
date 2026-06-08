@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -29,6 +30,13 @@ public class ErrorController : BaseApiController
     public IActionResult GetServerError() // 500
     {
         throw new Exception("Server error");
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpGet("admin-secret")]
+    public ActionResult<string> GetSecretAdmin()
+    {
+        return Ok("Only admins can see this");
     }
 }
 
