@@ -19,9 +19,9 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<AppUser>
 
         modelBuilder.Entity<IdentityRole>()
             .HasData(
-                new IdentityRole { Id = "member-id", Name = "Member", NormalizedName = "MEMBER" },
-                new IdentityRole { Id = "moderator-id", Name = "Moderator", NormalizedName = "MODERATOR" },
-                new IdentityRole { Id = "admin-id", Name = "Admin", NormalizedName = "ADMIN" }
+                new IdentityRole { Id = "member-id", Name = "Member", NormalizedName = "MEMBER", ConcurrencyStamp = "882f08a3-81dd-44dc-91cb-a7c67147494a" },
+                new IdentityRole { Id = "moderator-id", Name = "Moderator", NormalizedName = "MODERATOR", ConcurrencyStamp = "ebb9274b-af35-45a2-abf9-8075a4bfc997" },
+                new IdentityRole { Id = "admin-id", Name = "Admin", NormalizedName = "ADMIN", ConcurrencyStamp = "797905bc-96fa-4d21-939a-edfb598dd95c" }
             );
 
         modelBuilder.Entity<MemberLike>()
