@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { ToastService } from './toast-service';
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
 import { User } from '../../types/user';
+import { Message } from '../../types/message';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,10 @@ export class PresenceService {
 
     this.hubConnection.on('GetOnlineUsers', (usersIds) => {
       this.onlineUsers.set(usersIds);
+    });
+
+    this.hubConnection.on('NewMessageReceived', (message: Message) => {
+      this.toast.info(message.senderDisplayName + ' sent you a message');
     });
   }
 
