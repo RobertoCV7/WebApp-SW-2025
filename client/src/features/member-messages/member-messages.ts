@@ -1,7 +1,6 @@
-import { Component, effect, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, effect, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { MessagesService } from '../../core/services/messages-service';
 import { MembersService } from '../../core/services/members-service';
-import { Message } from '../../types/message';
 import { DatePipe } from '@angular/common';
 import { TimeAgoPipe } from '../../core/pipes/time-ago-pipe';
 import { FormsModule } from '@angular/forms';
@@ -19,13 +18,12 @@ export class MemberMessages implements OnInit {
   protected messagesService = inject(MessagesService);
   private membersService = inject(MembersService);
   private router = inject(ActivatedRoute);
-  protected messages = signal<Message[]>([]);
   protected messageContent = '';
   protected presenceService = inject(PresenceService);
 
   constructor() {
     effect(() => {
-      const currentMessages = this.messages();
+      const currentMessages = this.messagesService.messageThread();
       if (currentMessages.length > 0) {
         this.scrollToBottom();
       }
@@ -42,32 +40,11 @@ export class MemberMessages implements OnInit {
     });
   }
 
-  loadMessages() {
-    const memberId = this.membersService.member()?.id;
-    if (memberId) {
-      this.messagesService.getMessageThread(memberId).subscribe({
-        next: (messages) =>
-          this.messages.set(
-            messages.map((message) => ({
-              ...message,
-              currentUserSender: message.senderId !== memberId,
-            })),
-          ),
-      });
-    }
-  }
-
   sendMessage() {
     const recipientId = this.membersService.member()?.id;
     if (!recipientId) return;
-    this.messagesService.sendMessage(recipientId, this.messageContent).subscribe({
-      next: (message) => {
-        this.messages.update((messages) => {
-          message.currentUserSender = true;
-          return [...messages, message];
-        });
-        this.messageContent = '';
-      },
+    this.messagesService.sendMessage(recipientId, this.messageContent)?.then(() => {
+      this.messageContent = '';
     });
   }
 
